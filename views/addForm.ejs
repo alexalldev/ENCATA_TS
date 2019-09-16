@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Actual courses</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <form  action="javascript:void(null)" method="POST" class="form SendValuesForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="h1">
+                                Введите значения
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select class="form-control" name="Symbol">
+                                <% for(var course of courses) {%>
+                                    <option value="<%= course.Symbol %>"><%= course.Symbol %></option>
+                                <%} %>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" name="Last" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <button class="btn btn-success" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+            $(document).ready(function() {
+              $('.SendValuesForm').submit(function () {
+                var FormData = $('.SendValuesForm').serialize();
+                $.ajax({
+                  type: "POST",
+                  url: 'SendValues',
+                  data: FormData,
+                  dataType: 'text',
+                  success: function(data) {
+                      alert("Данные загружены");
+                  },
+                  error: function(xhr, str) {
+                    alert('Возникла ошибка: ' + xhr.responseCode);
+                  }
+                });
+              });
+            });
+          </script>
+</body>
+</html>
